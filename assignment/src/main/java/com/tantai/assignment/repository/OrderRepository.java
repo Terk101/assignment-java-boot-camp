@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
-
     @Query(
             value = "SELECT SUM(c.total_cost) FROM shopping_cart c " +
                     "INNER JOIN order_detail d ON d.card_id = c.card_id " +
