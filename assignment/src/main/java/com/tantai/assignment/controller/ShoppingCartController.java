@@ -1,5 +1,6 @@
 package com.tantai.assignment.controller;
 
+import com.tantai.assignment.domain.OrderDetail;
 import com.tantai.assignment.domain.ShoppingCart;
 import com.tantai.assignment.dto.ProductToCartDTO;
 import com.tantai.assignment.service.ShoppingCartService;
@@ -21,14 +22,14 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/card")
-    public ResponseEntity addProductToCart(@RequestParam("customerId") Integer customerId, @RequestBody List<ProductToCartDTO> productToCartDTOS) {
-        shoppingCartService.addProductToCart(productToCartDTOS, customerId);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<List<ShoppingCart>> addProductToCart(@RequestParam("customerId") Integer customerId, @RequestBody List<ProductToCartDTO> productToCartDTOS) {
+        List<ShoppingCart> shoppingCarts = shoppingCartService.addProductToCart(productToCartDTOS, customerId);
+        return ResponseEntity.ok().body(shoppingCarts);
     }
 
     @PostMapping("/cart-checkout")
-    public ResponseEntity addProductToCart(@RequestBody List<Integer>  cardIds, @RequestParam("customerId") Integer customerId) {
-        shoppingCartService.checkoutProduct(cardIds, customerId);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<List<OrderDetail>> addProductToCart(@RequestBody List<Integer> cardIds, @RequestParam("customerId") Integer customerId) {
+        List<OrderDetail> orderDetails = shoppingCartService.checkoutProduct(cardIds, customerId);
+        return ResponseEntity.ok().body(orderDetails);
     }
 }

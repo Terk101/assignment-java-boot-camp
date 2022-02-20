@@ -33,7 +33,7 @@ public class ShoppingCartService {
     }
 
     @Transactional
-    public void addProductToCart(List<ProductToCartDTO> products, Integer customerId) {
+    public List<ShoppingCart> addProductToCart(List<ProductToCartDTO> products, Integer customerId) {
         List<ShoppingCart> shoppingCarts = new ArrayList<>();
         for (ProductToCartDTO productDto : products) {
             Product product = productService.findProductById(productDto.getProductId());
@@ -46,7 +46,7 @@ public class ShoppingCartService {
             shoppingCart.setCartStatus(CartStatus.INITIAL.toString());
             shoppingCarts.add(shoppingCart);
         }
-        shoppingCartRepository.saveAll(shoppingCarts);
+       return shoppingCartRepository.saveAll(shoppingCarts);
     }
 
     public List<ShoppingCart> getShoppingCardDataByCustomerId(Integer customerId) {
@@ -55,7 +55,7 @@ public class ShoppingCartService {
     }
 
     @Transactional
-    public void checkoutProduct(List<Integer> shoppingCardIds, Integer customerId) {
+    public List<OrderDetail> checkoutProduct(List<Integer> shoppingCardIds, Integer customerId) {
         List<OrderDetail> orderDetails = new ArrayList<>();
         Customer customer = customerService.getCustomerById(customerId);
         Order order = new Order();
@@ -77,7 +77,7 @@ public class ShoppingCartService {
             orderDetail.setOrder(newOrder);
             orderDetails.add(orderDetail);
         }
-        orderDetailRepository.saveAll(orderDetails);
+       return orderDetailRepository.saveAll(orderDetails);
     }
 
     private BigDecimal calProductPrice(Integer productQty, BigDecimal productPrice) {
