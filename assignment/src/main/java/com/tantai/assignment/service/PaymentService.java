@@ -28,7 +28,7 @@ public class PaymentService {
     }
 
     @Transactional
-    public void makePayment(PaymentRequestDTO payment, Integer orderId) {
+    public Payment makePayment(PaymentRequestDTO payment, Integer orderId) {
         Order order = orderService.getOrderById(orderId);
         order.setOrderStatus(OrderStatus.PAID.toString());
         orderService.updateOrder(order);
@@ -44,7 +44,7 @@ public class PaymentService {
         newPayment.setPaidDate(LocalDateTime.now());
         newPayment.setPaymentStatus("PAID");
 
-        paymentRepository.save(newPayment);
+       return paymentRepository.save(newPayment);
     }
 
     private void updateCartStatus(List<OrderDetail> orderDetail) {

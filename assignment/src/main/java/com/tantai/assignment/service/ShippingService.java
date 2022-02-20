@@ -22,7 +22,7 @@ public class ShippingService {
     }
 
     @Transactional
-    public void makeShipment(ShippingRequestDTO shippingRequestDTO, Integer customerId, Integer orderId) {
+    public Shipping makeShipment(ShippingRequestDTO shippingRequestDTO, Integer customerId, Integer orderId) {
         if (Objects.nonNull(shippingRequestDTO)) {
             Shipping shipping = new Shipping();
             Customer customer = customerService.getCustomerById(customerId);
@@ -47,7 +47,8 @@ public class ShippingService {
                 shipping.setEmail(shippingRequestDTO.getEmail());
                 shipping.setPhoneNo(shippingRequestDTO.getPhoneNo());
             }
-            shippingRepository.save(shipping);
+            return shippingRepository.save(shipping);
         }
+        throw new IllegalArgumentException("Shipping can't null");
     }
 }

@@ -1,5 +1,6 @@
 package com.tantai.assignment.controller;
 
+import com.tantai.assignment.domain.Shipping;
 import com.tantai.assignment.dto.ShippingRequestDTO;
 import com.tantai.assignment.service.ShippingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +14,11 @@ public class ShippingController {
     private ShippingService shippingService;
 
     @PostMapping("/shipment")
-    public ResponseEntity makeShipment(@RequestBody ShippingRequestDTO shippingRequest
+    public ResponseEntity<Shipping> makeShipment(@RequestBody ShippingRequestDTO shippingRequest
             , @RequestParam("customerId") Integer customerId
             , @RequestParam("orderId") Integer orderId) {
 
-        shippingService.makeShipment(shippingRequest, customerId, orderId);
-        return ResponseEntity.ok().build();
+        Shipping shipping = shippingService.makeShipment(shippingRequest, customerId, orderId);
+        return ResponseEntity.ok().body(shipping);
     }
 }

@@ -1,5 +1,6 @@
 package com.tantai.assignment.controller;
 
+import com.tantai.assignment.domain.Payment;
 import com.tantai.assignment.dto.PaymentRequestDTO;
 import com.tantai.assignment.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,8 @@ public class PaymentController {
     private PaymentService paymentService;
 
     @PostMapping("/")
-    public ResponseEntity makePayment(@RequestBody PaymentRequestDTO paymentRequestDTO, @RequestParam("orderId") Integer payment) {
-        paymentService.makePayment(paymentRequestDTO, payment);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Payment> makePayment(@RequestBody PaymentRequestDTO paymentRequestDTO, @RequestParam("orderId") Integer payment) {
+        Payment newPayment = paymentService.makePayment(paymentRequestDTO, payment);
+        return ResponseEntity.ok().body(newPayment);
     }
 }
